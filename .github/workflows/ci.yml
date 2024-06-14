@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -16,15 +15,17 @@ jobs:
     - name: Install dependencies
       run: composer install
     - name: Create SQLite database
-      run: touch database/database.sqlite
+      run: touch database/testing.sqlite
     - name: Run migrations
-      run: php artisan migrate
+      run: php artisan migrate --env=testing
     - name: Run tests
-      run: php artisan test
+      run: php artisan test --env=testing
+    - name: Force failure
+      run: exit 1
     - name: Notify on failure
       if: failure()
       run: ./send_email.sh failed
       env:
         MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
-        DOMAIN_NAME: your.domain.com
+        DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
         GITHUB_ACTOR: ${{ github.actor }}
