@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    triggers {
+        pollSCM('H/5 * * * *') // Periodically check for updates every 5 minutes
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'your-build-command'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'your-test-command'
+            }
+        }
+    }
+}
