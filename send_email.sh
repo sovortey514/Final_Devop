@@ -3,7 +3,7 @@ if [ "$1" == "failed" ]; then
   curl -s --user "api:$MAILGUN_API_KEY" \
     https://api.mailgun.net/v3/$DOMAIN_NAME/messages \
     -F from='CI <ci@$DOMAIN_NAME>' \
-    -F to='sovateysoaphorn@gmail.com' \
+    -F to='tongsreng@itc.edu.kh' \
     -F to="$GITHUB_ACTOR@users.noreply.github.com" \
     -F subject='Build failed' \
     -F text='The latest build failed. Please check the CI logs.'
